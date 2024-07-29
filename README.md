@@ -1,2 +1,12 @@
 # GameDev_2024_S2
- Our Class Shiz
+ ### Week 3 
+ - Namespaces
+ - Properties
+   + Set 
+   + Get
+ - CharacterControllers
+ - Structs
+ - Serialisation
+ - Input Manager
+ - Enums
+ - 

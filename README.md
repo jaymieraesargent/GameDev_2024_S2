@@ -1,2 +1,5 @@
 # GameDev_2024_S2
- Our Class Shiz
+ ### Week 3 
+ - Properties
+ - CharacterControllers
+ - 

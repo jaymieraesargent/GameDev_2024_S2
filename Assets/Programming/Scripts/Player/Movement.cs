@@ -14,7 +14,7 @@ namespace Player
         [SerializeField] CharacterController _characterController;
         //walk, crouch, sprint, jump, gravity
         [SerializeField] float _movementSpeed, _walk = 5, _run = 10, _crouch = 2.5f, _jump = 8, _gravity = 20;
-
+        
         #endregion
         #region Functions
         private void Awake()

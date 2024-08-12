@@ -95,7 +95,17 @@ namespace Player
             }
         }
         #endregion
+        private void OnTriggerEnter(Collider other)
+        {
+            regenValue *= 2;
+        }
+        private void OnTriggerExit(Collider other)
+        {
+            regenValue /= 2;
+        }
     }
+
+    
 }
 
 

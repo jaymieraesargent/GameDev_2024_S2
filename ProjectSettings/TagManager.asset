@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Damage
+  - RayDoor
+  - Door
+  - Heal
   layers:
   - Default
   - TransparentFX

@@ -49,6 +49,7 @@ namespace Enemy
             _animator = GetComponent<Animator>();
             _state = AIState.Idle;
             TransitionToState(_state);
+
         }
         private void Update()
         {
@@ -57,7 +58,29 @@ namespace Enemy
             {
                 TransitionToState(AIState.Chase);
             }
-            TransitionToState(_state);
+            //TransitionToState(_state);
+            switch (_state)
+            {
+                case AIState.Idle:
+                    StartCoroutine(Idle());
+                    break;
+                case AIState.Patrol:
+                    Patrol();
+                    break;
+                case AIState.Wander:
+                    Wander();
+                    break;
+                case AIState.Stun:
+                    Stun();
+                    break;
+                case AIState.Attack:
+                    Attack();
+                    break;
+                case AIState.Chase:
+                    Chase();
+                    break;
+              
+            }
         }
         #endregion
 
@@ -85,25 +108,26 @@ namespace Enemy
                 case AIState.Chase:
                     Chase();
                     break;
-                default:
-                    StartCoroutine(Idle());
-                    break;
+               
             }
         }
         IEnumerator Idle()
         {
             PlayAnim("Idle");
             yield return new WaitForSeconds(Random.Range(3, 10f));
-            int choice = Random.Range(0,2);
-            if (choice == 0)
+            if (_state == AIState.Idle)
             {
-                _randomPosition = GetRandomPosition();
-                TransitionToState(AIState.Wander);
-            }
-            else
-            {
-                TransitionToState(AIState.Patrol);
-            }
+                int choice = Random.Range(0, 2);
+                if (choice == 0)
+                {
+                    _randomPosition = GetRandomPosition();
+                    TransitionToState(AIState.Wander);
+                }
+                else
+                {
+                    TransitionToState(AIState.Patrol);
+                }
+            }           
         }
         void Patrol()
         {
@@ -111,8 +135,8 @@ namespace Enemy
             PlayAnim("Walk");
             if (_wayPoints.Length == 0)
             {
+                Debug.Log("No patrol waypoints assigned!");
                 TransitionToState(AIState.Idle);
-                return;
             }
             if(!_agent.pathPending && _agent.remainingDistance <= _agent.stoppingDistance)
             {
@@ -156,10 +180,10 @@ namespace Enemy
         Vector3 GetRandomPosition()
         {
             Vector3 finalPosition = Vector3.zero;
-            Vector3 randomDirection = Random.insideUnitSphere * 20;
+            Vector3 randomDirection = Random.insideUnitSphere * 10;
             randomDirection += transform.position;
             NavMeshHit hit;
-            if(NavMesh.SamplePosition(randomDirection, out hit, 20,1))
+            if(NavMesh.SamplePosition(randomDirection, out hit, 10,1))
             {
                 finalPosition = hit.position;
             }
@@ -194,7 +218,7 @@ namespace Enemy
         }
         private Vector3 GetPlayerPosition()
         {
-            return GameObject.FindGameObjectWithTag("Player").transform.position;
+            return GameObject.FindWithTag("Player").transform.position;
         }
     }
 }

@@ -9,6 +9,13 @@ TagManager:
   - Door
   - Heal
   - Enemy
+  - NPC
+  - Chest
+  - Item
+  - Pet
+  - Bed
+  - Campfire
+  - CraftingStation
   layers:
   - Default
   - TransparentFX

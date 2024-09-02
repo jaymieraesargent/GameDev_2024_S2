@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RayDoor : MonoBehaviour
+public class RayDoor : MonoBehaviour, IInteractable
 {
     public Animator animator;
     public bool isOpen = false;

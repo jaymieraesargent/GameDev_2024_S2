@@ -13,11 +13,7 @@ namespace Player
         public LayerMask interactionLayer;
         public bool showToolTip = false;
         public string action, button, instruction;
-        void Start()
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-        }
+   
 
         private void Update()
         {
@@ -38,18 +34,52 @@ namespace Player
                 if (Input.GetKey(KeyCode.E))
                 {
                     Debug.DrawRay(interactRay.origin, transform.forward * 10, Color.red);
-
+                    #region GROSS NO!!
                     //check what we hit and do ther thing 
-                    if (hitInfo.collider.CompareTag("Door"))
+                    //if (hitInfo.collider.CompareTag("Door"))
+                    //{
+                    //    //do thing
+                    //    if (hitInfo.collider.GetComponent<RayDoor>())
+                    //    {
+                    //        hitInfo.collider.GetComponent<RayDoor>().Interaction();
+                    //    }
+                    //}
+                    //if (hitInfo.collider.CompareTag("NPC"))
+                    //{
+                    //    if (hitInfo.collider.GetComponent<IMGUIDLG>())
+                    //    {
+                    //        hitInfo.collider.GetComponent<IMGUIDLG>().Interaction();
+                    //    }
+                    //}
+                    //if (hitInfo.collider.CompareTag("Chest"))
+                    //{
+
+                    //}
+                    //if (hitInfo.collider.CompareTag("Item"))
+                    //{
+
+                    //}
+                    //if (hitInfo.collider.CompareTag("Bed"))
+                    //{
+
+                    //}
+                    //if (hitInfo.collider.CompareTag("Campfire"))
+                    //{
+
+                    //}
+                    //if (hitInfo.collider.CompareTag("CraftingStation"))
+                    //{
+
+                    //}
+                    #endregion
+                    #region YAS
+                    if (hitInfo.collider.TryGetComponent<IInteractable>(out IInteractable interact))
                     {
                         //do thing
-                        if (hitInfo.collider.GetComponent<RayDoor>())
-                        {
-                            hitInfo.collider.GetComponent<RayDoor>().Interaction();
-                        }
+                        interact.Interaction();
                     }
+                    #endregion
                 }
-
             }
             else
             {
@@ -58,12 +88,12 @@ namespace Player
         }
         void OnGUI()
         {
-            //for(int x = 0; x < 16; x++) 
-            //{ 
-            //    for (int y = 0; y < 9; y++) 
+            //for (int x = 0; x < 16; x++)
+            //{
+            //    for (int y = 0; y < 9; y++)
             //    {
-            //        GUI.Box(UIPos(x,y,1,1), "");
-            //        GUI.Label(UIPos(x,y,1,1), x+":"+y);
+            //        GUI.Box(UIPos(x, y, 1, 1), "");
+            //        GUI.Label(UIPos(x, y, 1, 1), x + ":" + y);
             //    }
             //}
 

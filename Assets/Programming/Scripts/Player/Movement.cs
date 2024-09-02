@@ -23,7 +23,7 @@ namespace Player
         }
         private void Update()
         {
-            if (true)
+            if (GameManager.instance.gameState == GameManager.GameStates.Playing)
             {
                 //speed change
                 //_movementSpeed, walk ,run ,crouch 
@@ -46,7 +46,7 @@ namespace Player
                 _movementSpeed = Input.GetKey(KeyCode.LeftShift) ? _run : Input.GetKey(KeyCode.LeftControl) ? _crouch : _walk;
                 #endregion
                 //moving the character
-                //if our reference to the character controller has a value aka we connected it yay!!! woop 
+                //if our reference to the character controller has a value aka we ected it yay!!! woop 
                 if (_characterController != null)
                 {
                     //check of we are on the ground so we can move coz thats how people work 

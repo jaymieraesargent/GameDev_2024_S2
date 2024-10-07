@@ -13,7 +13,7 @@ namespace Player
         public LayerMask interactionLayer;
         public bool showToolTip = false;
         public string action, button, instruction;
-   
+
 
         private void Update()
         {
@@ -29,57 +29,77 @@ namespace Player
             {
                 Debug.DrawRay(interactRay.origin, transform.forward * 10, Color.green);
 
-                showToolTip = true; 
-                //if our interaction button or key is pressed
-                if (Input.GetKey(KeyCode.E))
+                showToolTip = true;
+                if (KeyBindManager.keys.Count <= 0)
                 {
-                    Debug.DrawRay(interactRay.origin, transform.forward * 10, Color.red);
-                    #region GROSS NO!!
-                    //check what we hit and do ther thing 
-                    //if (hitInfo.collider.CompareTag("Door"))
-                    //{
-                    //    //do thing
-                    //    if (hitInfo.collider.GetComponent<RayDoor>())
-                    //    {
-                    //        hitInfo.collider.GetComponent<RayDoor>().Interaction();
-                    //    }
-                    //}
-                    //if (hitInfo.collider.CompareTag("NPC"))
-                    //{
-                    //    if (hitInfo.collider.GetComponent<IMGUIDLG>())
-                    //    {
-                    //        hitInfo.collider.GetComponent<IMGUIDLG>().Interaction();
-                    //    }
-                    //}
-                    //if (hitInfo.collider.CompareTag("Chest"))
-                    //{
-
-                    //}
-                    //if (hitInfo.collider.CompareTag("Item"))
-                    //{
-
-                    //}
-                    //if (hitInfo.collider.CompareTag("Bed"))
-                    //{
-
-                    //}
-                    //if (hitInfo.collider.CompareTag("Campfire"))
-                    //{
-
-                    //}
-                    //if (hitInfo.collider.CompareTag("CraftingStation"))
-                    //{
-
-                    //}
-                    #endregion
-                    #region YAS
-                    if (hitInfo.collider.TryGetComponent<IInteractable>(out IInteractable interact))
+                    //if our interaction button or key is pressed
+                    if (Input.GetKey(KeyCode.E))
                     {
-                        //do thing
-                        interact.Interaction();
+                        Debug.DrawRay(interactRay.origin, transform.forward * 10, Color.red);
+                        #region GROSS NO!!
+                        //check what we hit and do ther thing 
+                        //if (hitInfo.collider.CompareTag("Door"))
+                        //{
+                        //    //do thing
+                        //    if (hitInfo.collider.GetComponent<RayDoor>())
+                        //    {
+                        //        hitInfo.collider.GetComponent<RayDoor>().Interaction();
+                        //    }
+                        //}
+                        //if (hitInfo.collider.CompareTag("NPC"))
+                        //{
+                        //    if (hitInfo.collider.GetComponent<IMGUIDLG>())
+                        //    {
+                        //        hitInfo.collider.GetComponent<IMGUIDLG>().Interaction();
+                        //    }
+                        //}
+                        //if (hitInfo.collider.CompareTag("Chest"))
+                        //{
+
+                        //}
+                        //if (hitInfo.collider.CompareTag("Item"))
+                        //{
+
+                        //}
+                        //if (hitInfo.collider.CompareTag("Bed"))
+                        //{
+
+                        //}
+                        //if (hitInfo.collider.CompareTag("Campfire"))
+                        //{
+
+                        //}
+                        //if (hitInfo.collider.CompareTag("CraftingStation"))
+                        //{
+
+                        //}
+                        #endregion
+                        #region YAS
+                        if (hitInfo.collider.TryGetComponent<IInteractable>(out IInteractable interact))
+                        {
+                            //do thing
+                            interact.Interaction();
+                        }
+                        #endregion
                     }
-                    #endregion
                 }
+                else
+                {
+                    //if our interaction button or key is pressed
+                    if (Input.GetKey(KeyBindManager.keys["Interact"]))
+                    {
+                        Debug.DrawRay(interactRay.origin, transform.forward * 10, Color.red);
+                  
+                        #region YAS
+                        if (hitInfo.collider.TryGetComponent<IInteractable>(out IInteractable interact))
+                        {
+                            //do thing
+                            interact.Interaction();
+                        }
+                        #endregion
+                    }
+                }
+               
             }
             else
             {
@@ -98,9 +118,9 @@ namespace Player
             //}
 
             GUI.Box(UIPos(7.75f, 4.25f, 0.5f, 0.5f), "", crossHair);
-            if (showToolTip )
+            if (showToolTip)
             {
-                GUI.Box(UIPos( 6.5f, 3.75f, 3f, 0.5f), $"{action} {button} {instruction}");
+                GUI.Box(UIPos(6.5f, 3.75f, 3f, 0.5f), $"{action} {button} {instruction}");
             }
         }
         Rect UIPos(float startX, float startY, float sizeX, float sizeY)

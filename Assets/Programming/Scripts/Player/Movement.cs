@@ -14,7 +14,8 @@ namespace Player
         [SerializeField] CharacterController _characterController;
         //walk, crouch, sprint, jump, gravity
         [SerializeField] float _movementSpeed, _walk = 5, _run = 10, _crouch = 2.5f, _jump = 8, _gravity = 20;
-        
+
+        Vector2 newInput;
         #endregion
         #region Functions
         private void Awake()
@@ -42,9 +43,7 @@ namespace Player
                 //    _movementSpeed = _walk; 
                 //}
                 #endregion
-                #region Option 2
-                _movementSpeed = Input.GetKey(KeyCode.LeftShift) ? _run : Input.GetKey(KeyCode.LeftControl) ? _crouch : _walk;
-                #endregion
+                
                 //moving the character
                 //if our reference to the character controller has a value aka we ected it yay!!! woop 
                 if (_characterController != null)
@@ -52,20 +51,42 @@ namespace Player
                     //check of we are on the ground so we can move coz thats how people work 
                     if (_characterController.isGrounded)
                     {
-                        //what is our direction? set the move direction based off inputs
-                        _moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0,Input.GetAxis("Vertical"));
+                        if(KeyBindManager.keys.Count <= 0)
+                        {
+                            //what is our direction? set the move direction based off inputs
+                            #region Option 2
+                            _movementSpeed = Input.GetKey(KeyCode.LeftShift) ? _run : Input.GetKey(KeyCode.LeftControl) ? _crouch : _walk;
+                            #endregion
+                            _moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+                        }
+                        else
+                        {
+                            newInput.x = Input.GetKey(KeyBindManager.keys["Left"]) ? -1 : newInput.x = Input.GetKey(KeyBindManager.keys["Right"]) ? 1 : 0;
+                            newInput.y = Input.GetKey(KeyBindManager.keys["Forward"]) ? 1 : newInput.y = Input.GetKey(KeyBindManager.keys["Backward"]) ? -1 : 0;
+                            _movementSpeed = Input.GetKey(KeyBindManager.keys["Sprint"])? _run: _movementSpeed = Input.GetKey(KeyBindManager.keys["Crouch"])? _crouch: _walk;
+                            _moveDirection = new Vector3(newInput.x, 0, newInput.y);
+                        }
                         //make sure that the direction forward is according to the players forward and not the world north
                         _moveDirection = transform.TransformDirection(_moveDirection);
                         //apply speed to the movement direction
                         _moveDirection *= _movementSpeed;
 
-                        //_moveDirection = transform.TransformDirection(new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"))* _movementSpeed);
-
                         //if we jump
-                        if (Input.GetButton("Jump"))
+                        if (KeyBindManager.keys.Count <= 0)
                         {
-                            //move up
-                            _moveDirection.y = _jump;
+                            if (Input.GetButton("Jump"))
+                            {
+                                //move up
+                                _moveDirection.y = _jump;
+                            }
+                        }
+                        else
+                        {
+                            if (Input.GetKey(KeyBindManager.keys["Jump"]))
+                            {
+                                //move up
+                                _moveDirection.y = _jump;
+                            }
                         }
                     }
                     //add gravity to direction
